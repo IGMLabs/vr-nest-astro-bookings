@@ -1,4 +1,5 @@
 import {   Injectable } from "@nestjs/common";
+import { Client } from "./client.interface";
 
 
 export class AppServiceBase {
@@ -29,6 +30,13 @@ export class AppServiceBase {
     }else{
       throw new Error(`${someNumber} es un numero negativo `);
     }
+  }
+
+  public updateClient(clientId: string, client: Client): Client {
+    if (clientId !== "") {
+      throw new Error("NOT FOUND: " + clientId);
+    }
+    return client;
   }
 }
 

@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 import { get } from "http";
 import { AppService } from "./app.service";
+import { Client } from "./client.interface";
 
 @Controller()
 export class AppController {
@@ -101,5 +102,15 @@ export class AppController {
     }
   }
 
+  @Put("client/:id")
+  public putClient(@Param("id") clientId: string, @Body() payload: Client): Client {
+    try {
+      return this.appService.updateClient(clientId, payload);
+    } catch (error) {
+      const message: string = error.message;
+      if (message.startsWith("NOT FOUND:")) throw new HttpException(message, HttpStatus.NOT_FOUND);
+      else throw new HttpException(message, HttpStatus.BAD_REQUEST);
+    }
+  }
   
 }
