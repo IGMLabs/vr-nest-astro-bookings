@@ -1,5 +1,6 @@
 import {   Injectable } from "@nestjs/common";
-import { Client } from "./client.interface";
+import { ClientDto } from "./models/client.dto";
+import { Client } from "./models/client.interface";
 
 
 export class AppServiceBase {
@@ -36,6 +37,12 @@ export class AppServiceBase {
     if (clientId !== "") {
       throw new Error("NOT FOUND: " + clientId);
     }
+    return client;
+  }
+  
+   public saveClient(clientDto: ClientDto): Client {
+    const client: Client = { ...clientDto };
+    client.id = Math.random().toString();
     return client;
   }
 }

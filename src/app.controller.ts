@@ -1,9 +1,10 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseFilters } from "@nestjs/common";
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseFilters, ValidationPipe } from "@nestjs/common";
 import { get } from "http";
 import { AppService } from "./app.service";
-import { Client } from "./client.interface";
+import { Client } from "./models/client.interface";
 import { BusinessErrorFilter } from "./core/filters/business-error.filter";
 import { PositiveNumberPipe } from "./core/pipes/positive-number.pipe";
+import { ClientDto } from "./models/client.dto";
 
 @Controller()
 export class AppController {
@@ -118,6 +119,12 @@ export class AppController {
     @Param("someParam", PositiveNumberPipe)someNumber: number
     ) : number{
    return this.appService.raizCuadrada(someNumber);
+  }
+
+  @Post("client")
+  public postClient(@Body( new ValidationPipe({whitelist: true, forbidNonWhitelisted: true})) payload:ClientDto): Client{
+    return this.appService.saveClient(payload);
+
   }
 
   @Put("client/:id")

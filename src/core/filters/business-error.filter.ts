@@ -10,8 +10,9 @@ export class BusinessErrorFilter<Error> implements ExceptionFilter {
 
     // Express specific
     const response = httpContext.getResponse<Response>();
+    
     const errorMessge = "👮‍♂️" + (exception as any).message;
-    this.logger.debug(errorMessge);
+    this.logger.debug(errorMessge)
     response.status(HttpStatus.BAD_REQUEST).json(
     {
       statusCode: HttpStatus.BAD_REQUEST,
