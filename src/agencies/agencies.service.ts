@@ -7,6 +7,7 @@ import { UtilsService } from 'src/core/utils/utils.service';
 export class AgenciesService {
     private readonly agencies: Agency [] = [];
   
+    constructor(private utilsService: UtilsService) {}
 
   public selectAll(): Agency[] {
     return this.agencies;
@@ -18,7 +19,7 @@ export class AgenciesService {
 
   public insert(agency: AgencyDto): Agency {
     const newAgency = {
-      id: UtilsService.createGUID(),
+      id: this.utilsService.createGUID(),
       ...agency,
     };
     this.agencies.push(newAgency);

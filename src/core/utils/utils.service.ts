@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class UtilsService {
     private readonly STRING_BASE = 36;
 
-    private createGUID(): string {
+    public createGUID(): string {
         const head = this.getStringBasedFormat(Date.now());
         const random = this.getStringBasedFormat(Math.random());
         const decimalPosition = 2;
