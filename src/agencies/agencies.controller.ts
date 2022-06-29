@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AgencyDto } from 'src/models/Agency.dto';
 import { Agency } from 'src/models/agency.interface';
 import { AgenciesService } from './agencies.service';
+import { ApiKeyGuard } from './api-key.guard';
+
+
 
 @Controller('agencies')
 export class AgenciesController {
@@ -18,6 +21,7 @@ export class AgenciesController {
   }
 
   @Post()
+  @UseGuards(ApiKeyGuard)
   postAgency(
     @Body()
     agency: AgencyDto,
