@@ -1,5 +1,4 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseFilters, ValidationPipe } from "@nestjs/common";
-import { get } from "http";
 import { AppService } from "./app.service";
 import { Client } from "./models/client.interface";
 import { BusinessErrorFilter } from "./core/filters/business-error.filter";
@@ -60,7 +59,6 @@ export class AppController {
     const square = someNumber * someNumber;
     return `Square: ${someParam} of type ${type} is ${square}` ;
   }
-
 
   @Get('/multiply/:someParam/:otherNumber')
   public getMultiply(
