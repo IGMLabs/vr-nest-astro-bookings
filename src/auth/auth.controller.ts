@@ -18,6 +18,7 @@ export class AuthController {
   public async postLogin(@Body() login: LoginDto): Promise<Credentials> {
     return await this.authService.login(login);
   }
+  
 @Get("me")
 @UseGuards(AuthGuard('jwt'))
   public async getCurrentUser(@Req() req:any){
