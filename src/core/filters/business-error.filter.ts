@@ -1,23 +1,23 @@
-import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from '@nestjs/common';
-import { Response } from 'express';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus, Logger } from "@nestjs/common";
+import { ExpressFilter } from "./express.filter";
+import { ResponseError } from "./reponse-error.interface";
 
 @Catch()
-export class BusinessErrorFilter<Error> implements ExceptionFilter {
-  private readonly logger = new Logger('BusinessErrorFilter');
-  catch(exception: Error, host: ArgumentsHost) {
-      // ! http specific
-    const httpContext = host.switchToHttp();
+export class BusinessErrorFilter<Error> extends ExpressFilter implements ExceptionFilter {
+  public catch(exception: Error, host: ArgumentsHost) {
+    this.extractExpressData(host);
+    const responseError = this.getResponseError(exception);
+    this.sendResponseError(responseError, new Logger("BusinessErrorFilter"));
+  }
 
-    // Express specific
-    const response = httpContext.getResponse<Response>();
-    
-    const errorMessge = "👮‍♂️" + (exception as any).message;
-    this.logger.debug(errorMessge)
-    response.status(HttpStatus.BAD_REQUEST).json(
-    {
-      statusCode: HttpStatus.BAD_REQUEST,
-      message: errorMessge
-    });
-    
+  private getResponseError(exception: Error): ResponseError {
+    const status = HttpStatus.BAD_REQUEST;
+    const errorMessage = "👮🏼‍♂️ " + (exception as any).message;
+    const responseError = {
+      statusCode: status,
+      message: errorMessage,
+      path: this.request.url,
+    };
+    return responseError;
   }
 }
