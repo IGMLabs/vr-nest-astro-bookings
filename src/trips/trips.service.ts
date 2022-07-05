@@ -5,10 +5,12 @@ import { EntityNotFoundError, Repository } from 'typeorm';
 import { Trip } from './entities/trip.entity';
 import { InjectRepository } from "@nestjs/typeorm";
 import { UtilsService } from 'src/core/utils/utils.service';
+import { Booking } from 'src/bookings/entities/booking.entity';
 
 @Injectable()
 export class TripsService { 
   constructor( @InjectRepository(Trip) private tripRepository : Repository<Trip>,
+              @InjectRepository(Booking) private bookingRepository : Repository<Trip>,
                 private readonly utilsService : UtilsService){}
 
  async  create(createTripDto: CreateTripDto) {
@@ -24,6 +26,7 @@ export class TripsService {
   async findOne(id: string) {
     const trip = await this.tripRepository.findOneBy({ id: id });
     if (!trip) throw new EntityNotFoundError(Trip, id);
+    // trip.bookings =  await this.bookingRepository.findOneBy({id: id});
     return trip;
   }
 
