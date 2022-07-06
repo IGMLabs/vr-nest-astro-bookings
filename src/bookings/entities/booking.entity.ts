@@ -11,14 +11,15 @@ export class Booking {
     trip : Trip;
 
     @Column({nullable: false})
-    client : string;
-
-    @Column({type: 'int', default: 1})
-    passsengers: number;
+    passengerName : string;
 
     @Column({type: 'timestamp', default: () => 'now()'})    
-    createdAt: Date;
+    date: Date;
 
     @Column({nullable: true})
     updateAt: Date;
+
+    @Column()
+    luggageKilos: number;
+
 }

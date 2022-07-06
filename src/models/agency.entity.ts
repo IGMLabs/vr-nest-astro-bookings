@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 @Schema({ collection: "agencies", _id: true, timestamps: true })
 export class Agency {
   @Prop({ required: true })
-  _id: mongoose.Types.ObjectId;
+  id: string;
 
   @Prop({ required: true, unique: true })
   name: string;
@@ -13,7 +13,7 @@ export class Agency {
   range?: string;
 
   @Prop({ required: false, index: true })
-  status?: boolean;
+  status?: string;
 
   @Prop({ required: false, index: false })
   fee?: number;

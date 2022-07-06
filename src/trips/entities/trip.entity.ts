@@ -9,6 +9,9 @@ export class Trip {
     @Column()
     destination : string;
 
+    @Column()
+    agencyId : string;
+
     @Column({type: 'date'})
     startDate: Date;
 
@@ -16,7 +19,7 @@ export class Trip {
     endDate: Date;
 
     @Column({type: 'decimal'})
-    price: number;
+    flightPrice: number;
 
     @Column({type: 'int', default: 10})
     places: number;

@@ -1,6 +1,7 @@
 import { ArgumentsHost, Logger } from "@nestjs/common";
 import { Request, Response } from "express";
-import { ResponseError } from "./response-error.interface";
+import { ResponseError } from "./reponse-error.interface";
+
 
 export class ExpressFilter {
   protected request!: Request;

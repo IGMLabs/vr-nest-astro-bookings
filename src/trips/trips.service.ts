@@ -15,7 +15,7 @@ export class TripsService {
 
  async  create(createTripDto: CreateTripDto) {
     const trip = this.tripRepository.create(createTripDto);
-    trip.id = this.utilsService.createGUID();
+    //trip.id = this.utilsService.createGUID();
     return await this.tripRepository.save(trip);
   }
 

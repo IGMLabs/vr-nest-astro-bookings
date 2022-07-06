@@ -41,21 +41,27 @@ export class BookingsService {
   }
 
   private bookTripPlaces(trip: Trip, createBookingDto: CreateBookingDto, booking: Booking) {
-    if (!trip)
-      throw new EntityNotFoundError(Trip, createBookingDto.tripId);
-    if (trip.places <= createBookingDto.passengers)
-      throw new Error("BUSINESS: Not enough places");
-    trip.places -= createBookingDto.passengers;
+    // if (!trip)
+    //   throw new EntityNotFoundError(Trip, createBookingDto.tripId);
+    // if (trip.places <= createBookingDto.passengers)
+    //   throw new Error("BUSINESS: Not enough places");
+    // trip.places -= createBookingDto.passengers;
     booking.id = this.utilsService.createGUID();
     booking.trip = trip;
   }
 
-  findAll() {
-    return `This action returns all bookings`;
+  async findAll() {
+    return await this.bookingsRepository.find({ relations: {trip: true}});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} booking`;
+
+ async findOne(id: string) {
+    const booking = await this.bookingsRepository.findOne({
+      where: {id:id },
+      relations: {trip: true}
+    });
+    if (!booking) throw new EntityNotFoundError(Booking, id);
+    return booking;
   }
 
   update(id: number, updateBookingDto: UpdateBookingDto) {
